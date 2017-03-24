@@ -2,7 +2,8 @@ from rest_framework import serializers
 from .models import CustomTest, TrainingCenter, TrainingCenterCourse
 from .models import CandidateRegistration, AppUser, JobRole
 from .models import SectorSkillCouncil
-from .models import CourseInfo, BatchInfo
+from .models import CourseInfo, BatchInfo, StudentCourseRegistration
+from .models import CourseFeedbackDetail
 
 class CustomTestSerializer(serializers.ModelSerializer):
 
@@ -61,4 +62,17 @@ class TrainingCenterCourseSerializer(serializers.ModelSerializer):
 		model = TrainingCenterCourse
 		fields = '__all__'
 		depth = 1
-				
+
+class StudentCourseRegistrationSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = StudentCourseRegistration
+		fields = '__all__'
+		depth = 1
+
+class CourseFeedbackDetailSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = CourseFeedbackDetail
+		fields = '__all__'
+		depth = 1

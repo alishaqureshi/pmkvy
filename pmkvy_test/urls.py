@@ -20,9 +20,11 @@ from api import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^api/districtlist/', views.DistrictList.as_view(), name='api_districtlist'),
     url(r'^api/customtest/', views.CustomTestList.as_view(), name='api'),
     url(r'^api/trainingcenter/', views.TrainingCenterList.as_view(), name='api_trainingcenter'),
     url(r'^api/candidates/', views.CandidateList.as_view(), name='api_candidate_list'),
+    url(r'^api/candidateregister/', views.CandidateRegister.as_view(), name='api_candidateregistration'),
     url(r'^api/users/', views.AppUserView.as_view(), name='app_user_view'),
     #url(r'^api/users/(?P<pk>[0-9]+)/$', views.AppUserView.as_view(), name='app_user_view'),
     url(r'^api/logincheck/', views.LoginCheck.as_view(), name='login_check'),
@@ -31,6 +33,12 @@ urlpatterns = [
     url(r'^api/coursedata/', views.CourseData.as_view(), name='api_coursedata'),
     url(r'^api/batchinfolist/', views.BatchInfoList.as_view(), name='api_batchinfolist'),
     url(r'^api/fetchtrainingcentercourse/', views.FetchTrainingCenterCourse.as_view(), name='api_fetchtrainingcentercourse'),
-    url(r'^api/batchinfocourse/', views.BatchInfoCourse.as_view(), name='api_batchinfocourse')
+    url(r'^api/batchinfocourse/', views.BatchInfoCourse.as_view(), name='api_batchinfocourse'),
+    url(r'^api/studentcourselist', views.StudentCourseList.as_view(), name='api_studentcourselist'),
+    url(r'^api/getstudentdetails', views.GetStudentDetails.as_view(), name='api_getstudentdetails'),
+    url(r'^api/studentcourseregistrationform', views.StudentCourseRegistrationForm.as_view(), name='api_studentcourseregistrationform'),
+    url(r'^api/studentcompletedcourses', views.StudentCompletedCourses.as_view(), name='api_studentcompletedcourses'),
+    url(r'^api/studentongoingcourses', views.StudentOngoingCourses.as_view(), name='api_studentongoingcourses'),
+    url(r'^api/coursefeedback', views.CourseFeedback.as_view(), name='api_coursefeedback'),
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
