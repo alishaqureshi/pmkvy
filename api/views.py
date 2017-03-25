@@ -42,11 +42,12 @@ class TrainingCenterList(APIView):
 class SingleTrainingCenter(APIView):
 
 	def post(self, request, format=None):
-		print(request.body)
-		jsonobject = json.loads(request.body)
-		print(jsonobject)
-		center_id = jsonobject["center_id"]
-		#center_id = request.data["center_id"]
+		try:
+			jsonobject = json.loads(request.body)
+			center_id = jsonobject["center_id"]
+		except:
+			center_id = request.data["center_id"]
+
 		try:
 			trainingcenter = TrainingCenter.objects.get(center_id=center_id)
 			serializer = TrainingCenterSerializer(trainingcenter)
@@ -99,13 +100,19 @@ class BatchInfoList(APIView):
 class BatchInfoCourse(APIView):
 
 	def post(self, request, format=None):
-		training_center_id = request.data["training_center_id"]
-		course_id = request.data["course_id"]
+		try:
+			jsonobject = json.loads(request.body)
+			training_center_id = jsonobject["training_center_id"]
+			course_id = jsonobject["course_id"]
+		except:
+			training_center_id = request.data["training_center_id"] 
+			course_id = request.data["course_id"]
+
 		courseobj = CourseInfo.objects.get(course_id=course_id)
 		center_id = TrainingCenter.objects.get(center_id=training_center_id)
 		batchlist = courseobj.batchinfo_set.filter(training_center_id=center_id.id)
 		serializer = BatchInfoSerializer(batchlist, many=True)
-		return Response(serializer.data)
+		return Response({'data':serializer.data})
 """
 	Login Singup credentials - register, login check
 """
@@ -134,11 +141,11 @@ class AppUserView(APIView):
 class LoginCheck(APIView):
 
 	def post(self, request, format=None):
-		jsonobject = json.loads(request.body)
-		print(request.body)
-		print(jsonobject)
-		user_email = jsonobject["user_email"]
-		user_password = jsonobject["user_password"]
+		#jsonobject = json.loads(request.body)
+		#print(request.body)
+		#print(jsonobject)
+		user_email = request.data["user_email"]
+		user_password = request.data["user_password"]
 		try:
 			user = AppUser.objects.get(user_email=user_email)
 			if user.user_email==user_email and user.user_password==user_password:
@@ -164,9 +171,9 @@ class CourseData(APIView):
 		return Response({'data':serializer.data})	
 
 	def post(self, request, format=None):
-		#jsonobject = json.loads(request.body)
-		#jobrolekey = jsonobject["job_role_name"]
-		jobrolekey = request.data["job_role_name"]
+		jsonobject = json.loads(request.body)
+		jobrolekey = jsonobject["job_role_name"]
+		#jobrolekey = request.data["job_role_name"]
 		jobroleobj = JobRole.objects.get(job_role_name=jobrolekey)
 		courselist = jobroleobj.courseinfo_set.all()
 		serializer = CourseInfoSerializer(courselist, many=True)
@@ -175,7 +182,9 @@ class CourseData(APIView):
 class FetchTrainingCenterCourse(APIView):
 
 	def post(self, request, format=None):
-		training_center_id = request.data["training_center_id"]
+		#training_center_id = request.data["training_center_id"]
+		jsonobject = json.loads(request.body)
+		training_center_id = jsonobject["training_center_id"]
 		t_id = TrainingCenter.objects.get(center_id=training_center_id)
 		datalist = TrainingCenterCourse.objects.filter(training_center_id=t_id)
 		serializer = TrainingCenterCourseSerializer(datalist, many=True)

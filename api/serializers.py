@@ -15,7 +15,7 @@ class TrainingCenterSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = TrainingCenter
-		fields = ('id','center_id','training_center_name','address','training_center_district', 'training_center_state','center_poc_name','center_poc_email')		
+		fields = ('id','center_id','training_center_name','address','training_center_district', 'training_center_state','center_poc_name','center_poc_email','training_partner')		
 
 class CandidateRegistrationSerializer(serializers.ModelSerializer):
 
@@ -54,14 +54,13 @@ class BatchInfoSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = BatchInfo
 		fields = '__all__'
-		depth = 1
 
 class TrainingCenterCourseSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = TrainingCenterCourse
 		fields = '__all__'
-		depth = 1
+		depth = 2
 
 class StudentCourseRegistrationSerializer(serializers.ModelSerializer):
 
